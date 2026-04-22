@@ -7,7 +7,7 @@ import "./styles/index.css";
 import type { FrontendSDK } from "./types";
 import App from "./views/App.vue";
 
-const MINUTES = [5, 15, 30, 60, 240];
+const MINUTES = [1, 5, 15, 30, 60, 240];
 
 export const init = (sdk: FrontendSDK) => {
   const app = createApp(App);
@@ -45,6 +45,15 @@ export const init = (sdk: FrontendSDK) => {
     });
     sdk.commandPalette.register(filter);
   }
+
+  sdk.commands.register('editor.clear_search_bar', {
+    name: 'Clear search bar',
+    group: 'Editor',
+    run: async() => {
+      sdk.httpHistory.setQuery('');
+    }
+  });
+  sdk.commandPalette.register('editor.clear_search_bar');
 
   const root = document.createElement("div");
   Object.assign(root.style, {
